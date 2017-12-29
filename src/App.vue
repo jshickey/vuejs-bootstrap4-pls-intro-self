@@ -15,21 +15,16 @@
       </form>
       <hr/>
       <div class="card-columns">
-        <div class="card bg-success">
-          <div class="card-block">
-            <h5 class="card-title">Hello!</h5>
-            <p class="card-text">This is our fixed card!</p>
-            <p class="card-text"><small class="text-white">Added On {{dateToString(Date.now())}}</small></p>
-          </div>
-        </div>
+        <card class="card bg-success" :title="'Sticky Title: Hello!'"
+              :text="'This is our fixed Card.'"
+              :footer="'Added On ' + dateToString(Date.now())">
 
-        <div class="card" v-for="message in reverse(messages)">
-          <div class="card-block">
-            <h5 class="card-title">{{ message.title }}</h5>
-            <p class="card-text">{{ message.text }}</p>
-            <p class="card-text"><small class="text-muted">Added On {{ dateToString(message.timestamp) }}</small></p>
-          </div>
-        </div>
+        </card>
+        <card v-for="message in messages"
+              :title="message.title"
+              :text="message.text"
+              :footer="'Added On ' + dateToString(message.timestamp)">
+        </card>
       </div>
     </div>
   </div>
@@ -37,7 +32,8 @@
 
 <script>
   import Firebase from 'firebase'
-  import {dateToString, reverse} from './utils/utils'
+  import {dateToString} from './utils/utils'
+  import Card from './components/Card'
 
   let config = {
     apiKey: 'AIzaSyD0GO4UDs02BhoZvLQ_qaHOi9lVnXN9w7M',
@@ -75,11 +71,13 @@
         this.newMessage.title = ''
         this.newMessage.timestamp = null
       },
-      dateToString,
-      reverse
+      dateToString
     },
     firebase: {
       messages: messagesRef
+    },
+    components: {
+      Card
     }
   }
 </script>
